@@ -36,6 +36,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({ handleChange }) => {
     e.preventDefault();
     e.stopPropagation();
     setIsDragging(false);
+    setError(null);
 
     const files = e.dataTransfer.files;
     if (files.length > 1) {
@@ -65,6 +66,7 @@ export const ImageUpload: FC<ImageUploadProps> = ({ handleChange }) => {
         onDragEnter={handleDragEnter}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
+        data-testid="drop-zone"
       >
         <label
           htmlFor="file-upload"
@@ -83,10 +85,15 @@ export const ImageUpload: FC<ImageUploadProps> = ({ handleChange }) => {
             className="hidden"
             accept="image/*"
             onChange={handleChange}
+            data-testid="file-upload"
           />
         </label>
       </div>
-      {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+      {error && (
+        <p data-testid="error-message" className="mt-2 text-sm text-red-500">
+          {error}
+        </p>
+      )}
     </div>
   );
 };
